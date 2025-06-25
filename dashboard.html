@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow Dashboard - Productivity OS</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="pomodoro-popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+        <div class="floating-shape shape-6"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="theme-toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="switch">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                    <span class="ball"></span>
+                </label>
+            </div>
+            <div class="logo">
+                <span class="logo-text">FocusFlow</span>
+                <span class="logo-subtitle">Dashboard</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="pdf-parser.html" class="nav-link">PDF Summarizer</a>
+                <a href="sticky-board.html" class="nav-link">Notes</a>
+            </div>
+            <div class="user-info">
+                <span class="user-greeting">Hello, <span id="userName">Student</span>!</span>
+                <div class="mood-indicator" id="moodIndicator">😊</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <!-- Header Section -->
+        <section class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="welcome-section">
+                        <h1 class="dashboard-title">Your Productivity Hub</h1>
+                        <p class="dashboard-subtitle" id="motivationalMessage">Ready to conquer your goals today!</p>
+                    </div>
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="tasksCompleted">0</div>
+                            <div class="stat-label">Tasks Done</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="focusTime">0m</div>
+                            <div class="stat-label">Focus Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="streakDays">1</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <section class="dashboard-content">
+            <div class="container">
+                <div class="dashboard-grid">
+                    <!-- Focus Timer Section -->
+                    <div class="dashboard-card timer-card">
+                        <div class="card-header">
+                            <h3>Focus Timer</h3>
+                            <div class="timer-controls">
+                                <button class="timer-preset" data-time="25">25m</button>
+                                <button class="timer-preset" data-time="45">45m</button>
+                                <button class="timer-preset" data-time="60">60m</button>
+                            </div>
+                        </div>
+                        <div class="timer-display">
+                            <div class="timer-circle">
+                                <svg class="timer-svg" viewBox="0 0 100 100">
+                                    <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="timer-progress" cx="50" cy="50" r="45" id="timerProgress"></circle>
+                                </svg>
+                                <div class="timer-text">
+                                    <span class="timer-time" id="timerDisplay">25:00</span>
+                                    <span class="timer-label" id="timerLabel">Focus Time</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timer-buttons">
+                            <button class="btn-timer start" id="startTimer">Start</button>
+                            <button class="btn-timer pause" id="pauseTimer" disabled>Pause</button>
+                            <button class="btn-timer reset" id="resetTimer">Reset</button>
+                        </div>
+                    </div>
+
+                    <!-- Task Board Section -->
+                    <div class="dashboard-card tasks-card">
+                        <div class="card-header">
+                            <h3>Task Board</h3>
+                            <button class="add-task-btn" id="addTaskBtn">+ Add Task</button>
+                        </div>
+                        <div class="task-columns">
+                            <div class="task-column" data-status="todo">
+                                <div class="column-header">
+                                    <span class="column-title">To Do</span>
+                                    <span class="task-count" id="todoCount">0</span>
+                                </div>
+                                <div class="task-list" id="todoList" data-status="todo">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                            </div>
+                            <div class="task-column" data-status="doing">
+                                <div class="column-header">
+                                    <span class="column-title">In Progress</span>
+                                    <span class="task-count" id="doingCount">0</span>
+                                </div>
+                                <div class="task-list" id="doingList" data-status="doing">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                            </div>
+                            <div class="task-column" data-status="done">
+                                <div class="column-header">
+                                    <span class="column-title">Done</span>
+                                    <span class="task-count" id="doneCount">0</span>
+                                </div>
+                                <div class="task-list" id="doneList" data-status="done">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="dashboard-card progress-card">
+                        <div class="card-header">
+                            <h3>Today's Progress</h3>
+                            <div class="progress-percentage" id="progressPercentage">0%</div>
+                        </div>
+                        <div class="progress-visual">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-item">
+                                    <span class="progress-label">Tasks Completed</span>
+                                    <span class="progress-value" id="progressTasks">0/0</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span class="progress-label">Focus Sessions</span>
+                                    <span class="progress-value" id="progressSessions">0</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span class="progress-label">Productivity Score</span>
+                                    <span class="progress-value" id="productivityScore">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card actions-card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="action-buttons">
+                            <div class="action-group">
+                                <button class="action-btn has-dropdown" id="focusModeBtn">
+                                    <span class="action-icon">🎯</span>
+                                    <span class="action-text">Focus Mode</span>
+                                </button>
+
+                                <div class="timer-options hidden">
+                                    <button class="feature-sub-btn" data-page="pomodorotimer">Pomodoro Timer</button>
+                                    <button class="feature-sub-btn" data-page="normaltimer">Normal Timer</button>
+                                </div>
+                            </div>
+                            <button class="action-btn" id="breakTimeBtn">
+                                <span class="action-icon">☕</span>
+                                <span class="action-text">Take Break</span>
+                            </button>
+                            <button class="action-btn" id="reviewDayBtn">
+                                <span class="action-icon">📊</span>
+                                <span class="action-text">Review Day</span>
+                            </button>
+                            <button class="action-btn" id="motivationBtn">
+                                <span class="action-icon">💡</span>
+                                <span class="action-text">Motivation</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Task</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title</label>
+                        <input type="text" id="taskTitle" placeholder="Enter task title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" placeholder="Task description (optional)" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date</label>
+                        <input type="date" id="taskDueDate">
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-secondary" id="cancelTask">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Distraction Alert -->
+    <div id="distractionAlert" class="distraction-alert">
+        <div class="alert-content">
+            <span class="alert-icon">⚠️</span>
+            <span class="alert-message">Welcome back! Stay focused on your goals.</span>
+            <button class="alert-close" id="closeDistraction">&times;</button>
+        </div>
+    </div>
+
+    <!-- Pomodoro Info Modal -->
+    <div id="pomodoro-info-popup" class="pomodoro-popup hidden">
+        <div class="pomodoro-box">
+            <h2>🍅 What is the Pomodoro Technique?</h2>
+            <p>
+            The Pomodoro Technique breaks your work into 25-minute sessions with short breaks. Stay focused, avoid burnout.
+            </p>
+            <div class="popup-buttons">
+                <button onclick="closePomodoroInfo()">Cancel</button>
+                <button onclick="goToPomodoro()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="pomodoro-popup.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

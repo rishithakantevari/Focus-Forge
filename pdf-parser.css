@@ -1,0 +1,245 @@
+/* Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: #f0f0f0;
+  min-height: 100vh;
+  background: linear-gradient(300deg, rgb(11, 1, 51), rgb(45, 146, 146), rgb(7, 1, 53));
+  background-size: 180% 180%;
+  animation: gradient-animation 15s ease infinite;
+  transition: all 0.5s ease;
+}
+
+body.dark {
+  background: linear-gradient(135deg, #2d1b69 0%, #11052c 50%, #0f0c29 100%);
+  background-size: 180% 180%;
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.5s ease;
+}
+
+body.dark .container {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+h1 {
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+/* Upload Section */
+.upload-box {
+  text-align: center;
+  margin: 25px 0;
+  padding: 25px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+label[for="pdf-upload"] {
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+label[for="pdf-upload"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark label[for="pdf-upload"] {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+}
+
+#file-name {
+  margin-top: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Summary Section */
+.summary-box {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  min-height: 150px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+h2 {
+  color: #fff;
+  margin-top: 0;
+}
+
+#summary-text {
+  margin-top: 15px;
+  line-height: 1.6;
+  white-space: pre-line;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Download Button */
+#download-btn {
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark #download-btn {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+}
+
+#download-btn.hidden {
+  display: none;
+}
+
+/* Loading State */
+.hidden {
+  display: none;
+}
+
+#loading {
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid #3a7bd5;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+body.dark .spinner {
+  border-top: 3px solid #6a11cb;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+/* Toggle container */
+.theme-toggle-switch {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.theme-toggle-switch input {
+  display: none;
+}
+
+.switch {
+  background-color: #6f1883;
+  width: 60px;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.switch .icon {
+  font-size: 16px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.switch .ball {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+input:checked + .switch {
+  background-color: #38bdf8;
+}
+
+input:checked + .switch .ball {
+  transform: translateX(30px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

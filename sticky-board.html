@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky Notes</title>
+  <link rel="stylesheet" href="sticky-style.css" />
+  <!-- Load Buddy CSS -->
+  <link rel="stylesheet" href="buddy/buddy.css">
+  <style>
+  .study-buddy {
+    right: auto !important;
+    left: 30px !important;
+  }
+
+  .buddy-bubble {
+    left: auto !important;
+    right: -10px !important; /* Adjust this to make bubble not overlap image */
+    transform: translateX(0) !important;
+  }
+</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="notes-page">
+  <button class="fab" onclick="openNoteModal()">+</button>
+  <div class="theme-toggle-switch" style="top: 1rem; right: 1rem;">
+    <label>
+     <input type="checkbox" id="themeToggle" onchange="toggleDarkMode()" />
+     <div class="switch">
+       <span class="icon">☀️</span>
+        <span class="icon">🌙</span>
+        <div class="ball"></div>
+      </div>
+   </label>
+  </div>
+<button class="top-btn" style="top: 1rem; right: 10.5rem;" onclick="clearAllNotes()">🧹 Clear</button>
+  <div class="tag-filter-dropdown top-btn" style="top: 1rem; right: 5.5rem;">
+    <button onclick="toggleTagDropdown()">🔖 Tags</button>
+    <div id="tagDropdown" class="tag-dropdown-content">
+      <input type="text" id="tagSearchInput" placeholder="Search tag (e.g. #todo)" onkeydown="manualTagSearch(event)">
+      <div id="tagList" class="tag-list"></div>
+    </div>
+  </div>
+  <button class="top-btn theme" style="top: 1rem; left: 1rem;" onclick="openBackgroundModal()">🎨</button>
+  <div class="trash" id="trash">🗑️</div>
+  <div class="modal" id="noteModal">
+    <div class="modal-content full-editor">
+      <div class="toolbar">
+        <button onclick="formatText('bold',this)"><b>B</b></button>
+        <button onclick="formatText('italic',this)"><i>I</i></button>
+        <button onclick="formatText('underline',this)"><u>U</u></button>
+        <select onchange="applyListStyle(this.value)">
+        <option value="">None</option>
+        <option value="bullet">• Bullet</option>
+        <option value="number">1. Numbered</option>
+        <option value="checklist">☑ Checklist</option>
+        <option value="arrow">→ Arrow</option>
+        </select>
+        <button onclick="alignText('justifyLeft')">Left</button>
+        <button onclick="alignText('justifyCenter')">Center</button>
+        <button onclick="alignText('justifyRight')">Right</button>
+        <select onchange="changeFont(this.value)">
+          <option value="Arial">Arial</option>
+          <option value="Courier New">Courier</option>
+          <option value="Times New Roman">Times</option>
+        </select>
+        <select onchange="changeFontSize(this.value)">
+          <option value="3">Small</option>
+          <option value="6">Medium</option>
+          <option value="9">Large</option>
+        </select>
+        <input type="color" onchange="formatColor(this.value)" title="Text Color" />
+        <button onclick="downloadAsPDF()">Download PDF</button>
+        <button onclick="saveNote()">Save Note</button>
+        <button class="danger" onclick="confirmCloseNote()">Close</button>
+      </div>
+      <div id="noteEditor" contenteditable="true" class="editor-area"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="backgroundModal">
+    <div class="modal-content">
+      <div>
+        <div class="color-choice" style="background:#ffe4e1" onclick="changeBackgroundColor('#ffe4e1')"></div>
+        <div class="color-choice" style="background:#e0ffff" onclick="changeBackgroundColor('#e0ffff')"></div>
+        <div class="color-choice" style="background:#f0e68c" onclick="changeBackgroundColor('#f0e68c')"></div>
+        <div class="color-choice" style="background:#dda0dd" onclick="changeBackgroundColor('#dda0dd')"></div>
+        <div class="color-choice" style="background:#98fb98" onclick="changeBackgroundColor('#98fb98')"></div>
+      </div>
+      <div class="theme-section">
+        <strong>Aesthetic Presets</strong><br>
+        <span class="theme-option" onclick="setAestheticBackground('forest')">🌲 Rainy Forest</span>
+        <span class="theme-option" onclick="setAestheticBackground('beach')">🌊 Beach</span>
+        <span class="theme-option" onclick="setAestheticBackground('fireplace')">🔥 Fireplace</span>
+      </div>
+      <br />
+      <label>Upload Image:
+        <input type="file" accept="image/*" onchange="uploadBackground(event)" />
+      </label>
+    </div>
+  </div>
+
+  <!-- Include Study Buddy HTML -->
+  <div id="buddy-placeholder"></div>
+
+  <script src="sticky-script.js"></script>
+
+  <script>
+    fetch('buddy/buddy.html')
+        .then(res => res.text())
+        .then(html => {
+        document.getElementById("buddy-placeholder").innerHTML = html;
+
+        const script = document.createElement('script');
+        script.src = 'buddy/buddy.js';
+
+        script.onload = () => {
+            if (typeof initStudyBuddy === 'function') {
+            initStudyBuddy();
+            }
+        };
+
+        document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>

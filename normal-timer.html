@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(300deg, rgb(11, 1, 51), rgb(45, 146, 146), rgb(7, 1, 53));
+    color: white;
+    text-align: center;
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+    background-size: 180% 180%;
+    animation: gradientMove 5s ease infinite;
+  }
+
+  @keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+  }
+
+  .section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+  body.theme-1 {
+    background: linear-gradient(to right, #1d4350, #a43931);
+  }
+  body.theme-2 {
+    background: linear-gradient(to right, #eecda3, #ef629f);
+  }
+  body.theme-3 {
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+  }
+  .dark-toggle {
+  background: linear-gradient(135deg, #444, #222);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap; /* keep content on one line */
+  line-height: 1; /* tighter line spacing */
+}
+
+  .controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  margin-right: 30px;
+  background-color: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); /* Safari support */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+button {
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover and click effects */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+button:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 🎨 Specific color styles */
+.dark-toggle {
+  background: linear-gradient(135deg, #444, #222);
+  color: #fff;
+}
+
+.controls button:nth-child(1) {
+  background: linear-gradient(to right, #00b894, #00cec9); /* Start */
+  color: white;
+}
+.controls button:nth-child(2) {
+  background: linear-gradient(to right, #fdcb6e, #e17055); /* Pause */
+  color: white;
+}
+.controls button:nth-child(3) {
+  background: linear-gradient(to right, #6c5ce7, #a29bfe); /* Resume */
+  color: white;
+}
+.controls button:nth-child(4) {
+  background: linear-gradient(to right, #d63031, #e17055); /* Reset */
+  color: white;
+}
+
+button[onclick*="sticky-board"] {
+  background: linear-gradient(to right, #00cec9, #0984e3);
+  color: white;
+}
+
+  
+#countdownDisplay {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2.5em;
+  font-weight: bold;
+  z-index: 2;
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 8px rgba(162, 155, 254, 0.3), 0 0 16px rgba(162, 155, 254, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(162, 155, 254, 0.6), 0 0 40px rgba(162, 155, 254, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(162, 155, 254, 0.3), 0 0 16px rgba(162, 155, 254, 0.2);
+  }
+}
+
+/* Rotate animation for outer ring */
+@keyframes rotateRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ringPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(162, 155, 254, 0.2), 0 0 20px rgba(162, 155, 254, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(162, 155, 254, 0.5), 0 0 40px rgba(162, 155, 254, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(162, 155, 254, 0.2), 0 0 20px rgba(162, 155, 254, 0.3);
+  }
+}
+
+
+#countdownDisplay::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+#countdownDisplay span {
+  position: relative;
+  z-index: 2;
+}
+
+#timerStatus {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #ffea00;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1s infinite;
+}
+
+#pauseDot {
+  background-color: red;
+}
+
+#runDot {
+  background-color: #00e676;
+}
+
+#finishDot {
+  background-color: #00bcd4;
+}
+
+#statusText.running {
+  color: #00e676;
+}
+
+#statusText.paused {
+  color: #ffea00;
+}
+
+#statusText.finished {
+  color: #00bcd4;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+#statusText.running {
+  color: #00e676; /* greenish for running */
+}
+
+#statusText.paused {
+  color: #ffea00; /* yellow for paused */
+}
+
+#statusText.finished {
+  color: #ff1744; /* red for finished */
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.top-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row; /* ← Changed from column to row */
+  gap: 12px; /* Space between buttons */
+}
+
+.timer-ring-wrapper {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotateRing 10s linear infinite;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #a29bfe, #74b9ff, #a29bfe); 
+  padding: 10px;
+  box-shadow: 0 0 30px rgba(162, 155, 254, 0.6);
+}
+
+
+
+
+  
+select {
+  background: rgba(255, 255, 255, 0.07);
+  color: #000000;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: none;
+  
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.falling-star {
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: white;
+  animation: fall 3s linear infinite;
+  opacity: 0.6;
+}
+@keyframes fall {
+  from {
+    transform: translateY(-100px);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+#countdownDisplay.running {
+  animation: pulse-ring 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.85);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+#nudge {
+  position: absolute;
+  top: 30px;
+  font-size: 1.1em;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.071);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 8px 16px;
+  z-index: 10;
+  animation: fadeBounce 3s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeBounce {
+  0% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+}
+.top-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* .top-left button {
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+} */
+
+.top-left button {
+    background: linear-gradient(45deg, #8b5cf6, #ec4899);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    margin: 10px auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+
+  body.dark {
+    background: linear-gradient(135deg, #2d1b69 0%, #11052c 50%, #0f0c29 100%) !important;
+    color: #ffffff !important;
+    background-size: 180% 180%;
+    animation: gradientMove 5s ease infinite;
+  }
+  body.dark select {
+    
+    color: rgb(123, 123, 123) !important;
+  }
+  body.dark button,
+  body.dark label {
+    
+    color: white !important;
+  }
+  .theme-toggle-switch {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+
+
+.switch {
+  background-color: #6f1883;
+  width: 60px;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.switch .icon {
+  font-size: 16px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.switch .ball {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+input:checked + .switch {
+  background-color: #38bdf8;
+}
+
+input:checked + .switch .ball {
+  transform: translateX(30px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.theme-toggle-switch input[type="checkbox"] {
+  display: none;
+}
+body.sun-theme {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(300deg, rgb(11, 1, 51), rgb(45, 146, 146), rgb(7, 1, 53));
+  color: #ffffff;
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.timer-container {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  padding: 40px 30px;
+  max-width: 800px;
+  width: 90%;
+  margin: 10px auto 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+
+</style>
+</head>
+<body>
+  <div class="animated-bg" id="animated-bg"></div>
+<select onchange="toggleAnimation(this.value)" style="position:absolute;bottom:20px;right:20px;padding:8px;border-radius:6px;">
+  <option value="stars">🌟 Stars</option>
+  <option value="leaves">🍃 Leaves</option>
+  <option value="bubbles">🫧 Bubbles</option>
+</select>
+  
+  
+<div class="top-left">
+  <button class="dark-toggle" onclick="toggleTheme()">🎨 Theme</button>
+</div>
+
+
+<div class="top-right">
+  <div class="theme-toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="switch">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                    <span class="ball"></span>
+                </label>
+            </div>
+</div>
+
+
+  <div id="nudge">Let’s go! 💪</div>
+  <div class="timer-container">
+    <div class="timer-ring-wrapper">
+      <div id="countdownDisplay">
+        <span id="timeText">⏱ 25:00</span>
+      </div>
+    </div>
+    <div id="timerStatus">
+      <span id="pauseDot" class="statusDot" style="display:none;"></span>
+      <span id="runDot" class="statusDot" style="display:none;"></span>
+      <span id="finishDot" class="statusDot" style="display:none;"></span>
+      <span id="statusText" ></span>
+    </div>
+
+    
+    <div class="controls">
+      <button onclick="startTimerManually()" title="Start the timer" style="border-radius: 50px;">✅ Start</button>
+      <button onclick="pauseTimer()" title="Pause the timer" style="border-radius: 50px;">⏸️ Pause</button>
+      <button onclick="resumeTimer()" title="Resume the timer" style="border-radius: 50px;">▶️ Resume</button>
+      <button onclick="resetTimer()" title="Reset and clear the timer" style="border-radius: 50px;">🔄 Reset</button>
+    </div>
+  </div>
+
+<div class="section" >
+    <a href="sticky-board.html" class="button-link" style="display: inline-block; padding: 10px 20px; font-size: 1em; border: none; border-radius: 15px; cursor: pointer; background: linear-gradient(45deg, #3a7bd5, #00d2ff); color: white; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(223, 227, 241, 0.4); text-decoration: none; font-family: 'Poppins', sans-serif;">
+      📝 Make Notes
+    </a>
+</div>
+
+<div class="section">
+  <label>🎵 Background Music:
+    <select id="bgMusicSelect" onchange="playMusic(this.value)">
+  <option value="">None</option>
+  <option value="/FocusForge/FocusFlow/calming-rain-257596.mp3">🌧 Rain Sounds</option>
+  <option value="/FocusForge/FocusFlow/forest-ambience-296528.mp3">🌲 Forest Ambience</option>
+  <option value="/FocusForge/FocusFlow/waves-53479.mp3">🌊 Ocean Waves</option>
+</select>
+  </label>
+  </div>
+  <audio id="bgMusic" loop></audio>
+  <audio id="nudgeSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    const nudges = [
+      "Keep going — your future self will thank you!",
+      "You're doing amazing. Stay locked in. 💪",
+      "Focus is a superpower — and you’ve got it.",
+      "Small steps today = big wins tomorrow!",
+      "You’re not alone. Keep pushing. 💥",
+      "You’ve done harder things before — keep it up."
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const minutes = parseInt(params.get('time')) || 25;
+    let remaining = minutes * 60;
+    let interval;
+    let timerStarted = false;
+    let paused = false;
+
+    function updateCountdown() {
+    const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const s = String(remaining % 60).padStart(2, '0');
+    document.getElementById('timeText').textContent = `${m}:${s}`;
+
+    const totalSeconds = minutes * 60;
+    const progress = 1 - remaining / totalSeconds;
+    document.getElementById('countdownDisplay').style.setProperty('--progress', progress * 100);
+    document.getElementById('countdownDisplay').style.setProperty('--progress-color', '#3498db');
+
+}
+
+const toggle = document.getElementById("theme-toggle");
+const body = document.body;
+
+// Toggle theme
+toggle.addEventListener("change", () => {
+  body.classList.toggle("dark");
+  localStorage.setItem("theme", body.classList.contains("dark") ? "dark" : "sun-theme");
+});
+
+// Load saved theme
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.classList.add("dark");
+    toggle.checked = true;
+  }
+});
+
+
+    function startTimer() {
+  interval = setInterval(() => {
+    if (!paused) {
+      remaining--;
+      updateCountdown();
+      if (remaining <= 0) {
+  clearInterval(interval);
+
+  // 🎉 Confetti celebration
+  confetti({
+    particleCount: 100,
+    spread: 90,
+    origin: { y: 0.6 }
+  });
+
+  document.getElementById("statusText").textContent = "Finished";
+  document.getElementById("statusText").className = "finished";
+  document.getElementById("finishDot").style.display = "inline-block";
+  document.getElementById("pauseDot").style.display = "none";
+  document.getElementById("runDot").style.display = "none";
+
+  setTimeout(() => {
+    window.location.href = "todo.html";
+  }, 2000); // ⏳ wait 2 seconds before redirect
+}
+
+    }
+  }, 1000);
+}
+
+
+    function pauseTimer() {
+      paused = true;
+      document.getElementById("statusText").textContent = "Paused";
+      document.getElementById("statusText").className = "paused";
+      document.getElementById("pauseDot").style.display = "inline-block";
+      document.getElementById("runDot").style.display = "none";
+      document.getElementById("finishDot").style.display = "none";
+
+    }
+
+    function resumeTimer() {
+      paused = false;
+      document.getElementById("statusText").textContent = "Running";
+      document.getElementById("statusText").className = "running";
+      document.getElementById("runDot").style.display = "inline-block";
+      document.getElementById("pauseDot").style.display = "none";
+      document.getElementById("finishDot").style.display = "none";
+
+}
+    
+
+    function resetTimer() {
+  clearInterval(interval);
+  remaining = minutes * 60;
+  updateCountdown();
+  timerStarted = false;
+  paused = false;
+  createFallingStars();
+  document.getElementById("statusText").textContent = "";
+  document.getElementById("statusText").className = "";
+  document.getElementById("pauseDot").style.display = "none";
+  document.getElementById("runDot").style.display = "none";
+  document.getElementById("finishDot").style.display = "none";
+  document.getElementById("countdownDisplay").classList.remove("running");
+
+}
+
+    function toggleTheme() {
+  const themes = ['theme-1', 'theme-2', 'theme-3'];
+  const body = document.body;
+  body.classList.remove('dark', 'sun-theme');
+  for (let theme of themes) {
+    if (body.classList.contains(theme)) {
+      body.classList.remove(theme);
+      const nextIndex = (themes.indexOf(theme) + 1) % themes.length;
+      body.classList.add(themes[nextIndex]);
+      return;
+    }
+  }
+  body.classList.add('theme-1');
+}
+
+    function playMusic(src) {
+      const audio = document.getElementById("bgMusic");
+      audio.src = src;
+      src ? audio.play() : audio.pause();
+    }
+
+    function showNudge() {
+  const message = nudges[Math.floor(Math.random() * nudges.length)];
+  document.getElementById("nudge").textContent = message;
+  document.getElementById("nudgeSound").play();
+}
+
+let lostFocus = false;
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    lostFocus = true;
+  } else if (lostFocus) {
+    showNudge();
+    lostFocus = false;
+  }
+});
+
+    function createFallingStars() {
+  const container = document.getElementById('animated-bg');
+  container.innerHTML = '';
+  for (let i = 0; i < 20; i++) {
+    const star = document.createElement('div');
+    star.className = 'falling-star';
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.animationDelay = (Math.random() * 5) + 's';
+    star.style.animationDuration = (3 + Math.random() * 2) + 's';
+    container.appendChild(star);
+  }
+}
+
+function toggleAnimation(type) {
+  const container = document.getElementById('animated-bg');
+  container.innerHTML = '';
+  const styleMap = {
+    stars: { width: '2px', height: '40px', background: 'white' },
+    leaves: { width: '20px', height: '20px', background: 'green', borderRadius: '50%' },
+    bubbles: { width: '15px', height: '15px', background: 'rgba(255,255,255,0.3)', borderRadius: '50%' }
+  };
+  const style = styleMap[type] || styleMap.stars;
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.style.position = 'absolute';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animation = 'fall 4s linear infinite';
+    el.style.animationDelay = (Math.random() * 5) + 's';
+    el.style.animationDuration = (3 + Math.random() * 2) + 's';
+    Object.assign(el.style, style);
+    container.appendChild(el);
+  }
+}
+    
+
+    updateCountdown();
+  function startTimerManually() {
+  if (!timerStarted) {
+    timerStarted = true;
+    createFallingStars();
+    startTimer();
+    setInterval(showNudge, 600000);
+     showNudge();
+    document.getElementById("statusText").textContent = "Running";
+    document.getElementById("statusText").className = "running";
+    document.getElementById("runDot").style.display = "inline-block";
+    document.getElementById("pauseDot").style.display = "none";
+    document.getElementById("finishDot").style.display = "none";
+    document.getElementById("countdownDisplay").classList.add("running");
+
+
+  }
+}
+    
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+</body>
+</html>

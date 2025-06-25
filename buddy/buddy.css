@@ -1,0 +1,97 @@
+/* 📦 Buddy Container */
+.study-buddy {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 💬 Speech Bubble */
+.buddy-bubble {
+  position: relative;
+  /* background-color: #8866c0; */
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: #ffffff;
+  font-size: 15px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 5px solid #ccc;
+  max-width: 300px;
+  margin-bottom: 70px;
+  display: none;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Speech Bubble Arrow */
+.buddy-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 10px 0;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🧍 Avatar Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.float {
+  width: 150px;
+  height: auto;
+  cursor: pointer;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+.bounce {
+  width: 300px;
+  height: auto;
+  cursor: pointer;
+  animation: bounce 1.2s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+
+.float:hover,
+.bounce:hover {
+  transform: scale(1.05);
+}
+
+/* Hide on very small devices */
+@media (max-width: 850px) {
+  .study-buddy {
+    display: none;
+  }
+}
+
+.notes-page .study-buddy {
+  right: auto;
+  left: 30px;
+}
+
+.notes-page .buddy-bubble {
+  left: auto;
+  right: -10px;
+  transform: translateX(0);
+}
+

@@ -1,0 +1,240 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(300deg, rgb(11, 1, 51), rgb(45, 146, 146), rgb(7, 1, 53));
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  transition: background 0.3s, color 0.3s;
+  background-size: 180% 180%;
+  animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3.5rem;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 700px;
+  width: 90%;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.timer-circle {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+}
+
+circle {
+  fill: none;
+  stroke-width: 15;
+}
+
+circle:first-child {
+  stroke: #eeeef1;
+}
+
+#progressCircle {
+  stroke: rgb(11, 87, 102);
+  stroke-dasharray: 565.48;
+  stroke-dashoffset: 0;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 1s linear;
+}
+
+#time {
+  position: relative;
+  font-size: 2rem;
+  z-index: 1;
+}
+
+/* Buttons - Gradient Style */
+.controls button,
+#makeNotesBtn {
+  margin: 0.3rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+#makeNotesBtn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  margin: 0.3rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+#start {
+  background: linear-gradient(45deg, #10b981, #059669);
+}
+
+#pause {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+}
+
+#reset {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.controls button:hover,
+#makeNotesBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+.notes-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Toggle Switch - Styled to match main page */
+.dark-mode-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.theme-toggle-switch {
+  position: relative;
+  width: 70px;
+  height: 34px;
+  background-color: #6f1883; /* purple by default */
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.theme-toggle-switch .icon {
+  font-size: 18px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.theme-toggle-switch .ball {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+body.light-mode .theme-toggle-switch {
+  background-color: #38bdf8; /* light mode blue */
+}
+
+body.light-mode .theme-toggle-switch .ball {
+  transform: translateX(36px);
+}
+
+/* Dark Mode */
+.dark-mode {
+  background: linear-gradient(300deg, #0d0524 0%, #464180 50%, #11052c 100%);
+  background-size: 360% 180%;
+  animation: gradientMove 8s ease infinite;
+  color: #eee;
+}
+
+.dark-mode .card {
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+.dark-mode #progressCircle {
+  stroke: #c084fc;
+}
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+}
+/* Dark Mode Enhancements */
+.dark-mode .card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+}
+
+.dark-mode .drop-zone {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .summary-box {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Optional: Darker button glow on hover */
+.dark-mode .controls button:hover,
+.dark-mode #makeNotesBtn:hover {
+  box-shadow: 0 15px 40px rgba(199, 126, 234, 0.7);
+}

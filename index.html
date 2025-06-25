@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Frictionless Productivity OS</title>
+    <link href="./style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="pomodoro-popup.css">
+    <!-- Load Buddy CSS -->
+    <link rel="stylesheet" href="buddy/buddy.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div> 
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Toggle Switch -->
+            <div class="theme-toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="switch">
+                <span class="icon sun">☀️</span>
+                <span class="icon moon">🌙</span>
+                <span class="ball"></span>
+                </label>
+            </div>
+            <div class="logo">
+                <span class="logo-text">FocusFlow</span>
+            </div>
+            <div class="space"></div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="typing-text" data-text="Focus">Focus</span>
+                    <span class="gradient-text">Flow</span>
+                </h1>
+                <p class="hero-subtitle animate-fade-up">
+                    Frictionless Productivity OS for Students
+                </p>
+                <p class="hero-description animate-fade-up delay-1">
+                    Remove friction from your daily workflows with an adaptive system that responds to your focus level, task priority, and progress—all without logins or installations.
+                </p>
+                <div class="hero-buttons animate-fade-up delay-2">
+                    <button class="btn-primary" id="getStartedBtn">
+                        <span>Get Started</span>
+                        <div class="btn-ripple"></div>
+                    </button>
+                    <button class="btn-secondary" id="learnMoreBtn">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="productivity-mockup">
+                    <div class="mockup-screen">
+                        <div class="mockup-header">
+                            <div class="mockup-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="task-card animate-slide">
+                                <div class="task-priority high"></div>
+                                <span>Make Your Task Lists</span>
+                            </div>
+                            <div class="task-card animate-slide delay-1">
+                                <div class="task-priority medium"></div>
+                                <span>Study Notes</span>
+                            </div>
+                            <div class="task-card animate-slide delay-2">
+                                <div class="task-priority low"></div>
+                                <span>Generate Pdf Summaries</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title animate-on-scroll">Powerful Features</h2>
+                <p class="section-subtitle animate-on-scroll">Everything you need for productive studying</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <div class="icon-dashboard"></div>
+                    </div>
+                    <h3>Smart Dashboard</h3>
+                    <p>Drag-and-drop taskboard with focus timer and distraction detection</p>
+                    <button class="feature-btn" data-page="dashboard">Explore Dashboard</button>
+                </div>
+                <div class="feature-card animate-on-scroll delay-1">
+                    <div class="feature-icon">
+                        <div class="icon-calendar"></div>
+                    </div>
+                    <h3>PDF Summarizer</h3>
+                    <p>Smart document reader with summary extraction and keyword tracking</p>
+                    <button class="feature-btn" data-page="pdfparser">View Summarizer</button>
+                </div>
+                <div class="feature-card animate-on-scroll delay-2">
+                    <div class="feature-icon">
+                        <div class="icon-notes"></div>
+                    </div>
+                    <h3>Smart Notes</h3>
+                    <p>Draggable sticky notes with tagging and resource management</p>
+                    <button class="feature-btn" data-page="notes">Try Notes</button>
+                </div>
+                <div class="feature-card animate-on-scroll delay-3">
+                    <div class="feature-icon">
+                        <div class="icon-focus"></div>
+                    </div>
+                    <h3>Focus Mode</h3>
+                    <p>Distraction-free environment with gentle nudges and recovery alerts</p>
+                    <button class="feature-btn has-dropdown" data-page="focus">Enter Focus</button>
+                    <div class="timer-options hidden">
+                        <button class="feature-sub-btn" data-page="pomodorotimer">Pomodoro Timer</button>
+                        <button class="feature-sub-btn" data-page="normaltimer">Thematic Timer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="animate-on-scroll">Why FocusFlow?</h2>
+                    <p class="animate-on-scroll delay-1">
+                        FocusFlow solves student time management by combining smart planning, gentle nudges, intelligent reminders, and learning tools. It doesn't just organize your study life—it adapts, responds, and grows with your focus needs.
+                    </p>
+                    <div class="stats animate-on-scroll delay-2">
+                        <div class="stat">
+                            <span class="stat-number" data-target="95">0</span>%
+                            <span class="stat-label">Productivity Boost</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="60">0</span>%
+                            <span class="stat-label">Less Distraction</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="80">0</span>%
+                            <span class="stat-label">Better Focus</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual animate-on-scroll delay-1">
+                    <div class="feature-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">⚡</span>
+                            <span>No Login Required</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎯</span>
+                            <span>Adaptive Focus System</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📊</span>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🔄</span>
+                            <span>Smart Reminders</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome to FocusFlow</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Let's set up your productivity workspace in just a few steps.</p>
+                <div class="setup-options">
+                    <button class="setup-btn" data-setup="identity">
+                        <span class="setup-icon">👤</span>
+                        <span>Set Up Identity</span>
+                    </button>
+                    <button class="setup-btn" data-setup="dashboard">
+                        <span class="setup-icon">📊</span>
+                        <span>Go to Dashboard</span>
+                    </button>
+                    <button class="setup-btn" data-setup="pdfparser">
+                        <span class="setup-icon">📅</span>
+                        <span>Open PDF Summarizer</span>
+                    </button>
+                    <button class="setup-btn" data-setup="notes">
+                        <span class="setup-icon">📝</span>
+                        <span>View Notes</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pomodoro Info Popup -->
+    <div id="pomodoro-info-popup" class="pomodoro-popup hidden">
+        <div class="pomodoro-box">
+            <h2>🍅 What is the Pomodoro Technique?</h2>
+            <p>
+            The Pomodoro Technique is a time management method that breaks your work into focused 25-minute sessions with short breaks. If you're a person who can concentrate only for shorter intervals, then this is for you!
+            </p>
+            <div class="popup-buttons">
+                <button onclick="closePomodoroInfo()">Cancel</button>
+                <button onclick="goToPomodoro()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Study Buddy HTML -->
+    <div id="buddy-placeholder"></div>
+    
+    <script src="pomodoro-popup.js"></script>
+    <script src="script.js"></script>
+    
+    
+    <script>
+    fetch('buddy/buddy.html')
+        .then(res => res.text())
+        .then(html => {
+        document.getElementById("buddy-placeholder").innerHTML = html;
+
+        const script = document.createElement('script');
+        script.src = 'buddy/buddy.js';
+
+        script.onload = () => {
+            if (typeof initStudyBuddy === 'function') {
+            initStudyBuddy(); // ✅ Welcome message triggers
+            }
+        };
+
+        document.body.appendChild(script);
+        });
+    </script>
+</body>
+
+</html>
+   
